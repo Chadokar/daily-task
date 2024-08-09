@@ -19,7 +19,12 @@ export const request = ({ ...options }) => {
 // GET with Axios
 export const axiosGet = async (url, queryObj) => {
   const query = qs.stringify(queryObj);
-  const response = await client.get(`${url}?${query}`).catch((err) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  };
+  const response = await client.get(`${url}?${query}`, config).catch((err) => {
     console.log(err);
     throw new Error(err);
   });

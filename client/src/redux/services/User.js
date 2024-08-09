@@ -15,8 +15,8 @@ export async function fetchUserData(dispatch, navigate) {
         },
       };
       const response = await axios.get(`/user/profile`, config);
-      const data = response.data.data;
-      dispatch(setUser(data));
+      const data = response.data;
+      dispatch(setUser(data.user));
       return data;
     }
   } catch (error) {
@@ -24,7 +24,7 @@ export async function fetchUserData(dispatch, navigate) {
       localStorage.removeItem("token");
     createToast(error?.response?.data?.error, "error");
     createToast("Please Re-Login", "error");
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
     console.log(error);
     navigate("/login");
   }
@@ -66,10 +66,10 @@ export const login = async (dispatch, payload) => {
   try {
     // console.log("payload: ", payload);
     const response = await axios.post("/user/login", payload);
-    const data = response.data.data;
-    // console.log("data: ", data);
+    const data = response.data;
+    console.log("data: ", response);
     dispatch(setUser(data.user));
-    localStorage.setItem("token", response.data.data.token);
+    localStorage.setItem("token", data.token);
     createToast("Logged in successfully", "success");
     return response;
   } catch (error) {

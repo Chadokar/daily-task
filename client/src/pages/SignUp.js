@@ -16,6 +16,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
 import { generateOTP, verifyOTP } from "../redux/services/SignUp";
 import { useDispatch } from "react-redux";
+// import { useNavigate } from "react-router-dom";
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -75,6 +76,8 @@ const RegistrationForm = () => {
       setOtp("");
       setToken("");
       setIsOtpSent(false);
+      // navigate to home using window.location
+      window.location.href = "/";
     });
   };
 

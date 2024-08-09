@@ -1,7 +1,8 @@
 const express = require("express");
-const { body } = require("express-validator");
+const { body, header } = require("express-validator");
 const { validate } = require("../services/validator");
-const { login } = require("../controllers/auth");
+const { login, getUser } = require("../controllers/auth");
+const { verify } = require("../middlewares/verify");
 
 const Router = express.Router();
 // auth
@@ -18,5 +19,12 @@ Router.post(
   validate,
   login
 );
+
+Router.get("/profile", [
+  header("Authorization", "Authorization token is required").exists(),
+  validate,
+  // verify,
+  getUser,
+]);
 
 module.exports = Router;

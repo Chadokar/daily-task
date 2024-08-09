@@ -6,6 +6,16 @@ const {
   generateJWT,
 } = require("../services/misc-services");
 
+const getUser = async (req, res) => {
+  try {
+    res.status(200).json({ user: req.user, success: true });
+  } catch (error) {
+    res
+      .status(400)
+      .json({ error: error.message || error.detail || error, success: false });
+  }
+};
+
 const register = async (req, res) => {
   try {
     const { first_name, last_name, email, password, username } = req.body;
@@ -33,14 +43,12 @@ const register = async (req, res) => {
       { expiresIn: "30d" }
     );
 
-    res
-      .status(201)
-      .json({
-        message: "User created successfully",
-        user,
-        token,
-        success: true,
-      });
+    res.status(201).json({
+      message: "User created successfully",
+      user,
+      token,
+      success: true,
+    });
   } catch (error) {
     res
       .status(400)
@@ -90,4 +98,4 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+module.exports = { register, login, getUser };
