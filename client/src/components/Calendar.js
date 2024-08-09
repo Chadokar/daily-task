@@ -4,6 +4,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 // Utility functions to get the month and year, and the days of the week and dates
 const getDaysOfWeek = () => [
@@ -70,7 +71,13 @@ const DateCell = styled(Paper)({
   boxShadow: 'none', // Remove shadow to ensure consistent look
 });
 
+
 const CalendarGrid = () => {
+  const navigate = useNavigate();
+  const enterSchedule = () => {
+    navigate('/tasks');
+  };
+
   const daysOfWeek = getDaysOfWeek();
   const datesOfMonth = getDatesOfMonth();
 
@@ -109,7 +116,7 @@ const CalendarGrid = () => {
             <Grid container item direction="row" key={weekIndex}>
               {week.map((date, dateIndex) => (
                 <Grid item xs key={dateIndex} flex style={{ border: '1px solid rgba(255,255,255,0.3)'}}>
-                    <Button fullWidth sx={{height:'100%'}}>
+                    <Button fullWidth sx={{height:'100%'}} onClick={enterSchedule}>
 
                   <DateCell elevation={0}>
                     <Typography variant="body2">

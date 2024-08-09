@@ -13,6 +13,7 @@ const LazyForgotPassword = lazy(() => import("./ForgotPassword"));
 const LazyResetPassword = lazy(() => import("./ResetPassword"));
 const LazyHome = lazy(() => import("./LandingPage"));
 const LazyUser = lazy(() => import("./UserInfo"));
+const LazyTasks = lazy(() => import("./Tasks.js"));
 
 export const navItems = [
   {
@@ -61,16 +62,16 @@ export const navItems = [
     protected: false,
     errorElement: <Error />,
   },
-  //   {
-  //     path: "/search",
-  //     element: (
-  //       <Suspense fallback={<h1>Loading</h1>}>
-  //         <LazySearch />
-  //       </Suspense>
-  //     ),
-  //     protected: false,
-  //     errorElement: <Error />,
-  //   },
+    {
+      path: "/tasks",
+      element: (
+        <Suspense fallback={<h1>Loading</h1>}>
+          <LazyTasks />
+        </Suspense>
+      ),
+      protected: false,
+      errorElement: <Error />,
+    },
   {
     path: "/profile",
     element: (

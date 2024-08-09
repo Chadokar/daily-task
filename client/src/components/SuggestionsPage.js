@@ -27,19 +27,16 @@ const TaskPage = () => {
   const progressPercentage = (completedTasks.length / tasks.length) * 100;
 
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom sx={{ color: '#f0f0f0' }}>
-        Task Tracker
+    <Container sx={{my:3}}>
+      <Typography variant="h4" gutterBottom sx={{my:3, color: '#f0f0f0' }}>
+        Suggested Problems
       </Typography>
       
       <Box sx={{ mb: 3 }}>
-        <Typography variant="h6" gutterBottom sx={{ color: '#f0f0f0' }}>
-          Progress
-        </Typography>
         <Box
           sx={{
             position: 'relative',
-            height: 20,
+            height: 40,
             width: '100%',
             backgroundColor: '#444',
             borderRadius: 12,
@@ -74,7 +71,7 @@ const TaskPage = () => {
       </Box>
       
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <Box
             sx={{
               padding: 3,
@@ -114,7 +111,7 @@ const TaskPage = () => {
             )}
           </Box>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <Box
             sx={{
               padding: 3,
