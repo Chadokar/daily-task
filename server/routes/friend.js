@@ -7,6 +7,8 @@ const {
   acceptFriendRequest,
   getFriends,
   deleteFriend,
+  getFriendRequests,
+  getFriendRequestsSent,
 } = require("../controllers/friend");
 
 const router = express.Router();
@@ -23,7 +25,7 @@ router.post(
 );
 
 router.post(
-  "/accept-request",
+  "/accept",
   [
     header("Authorization", "Authorization token is required").exists(),
     body("friend", "Friend username is required").exists(),
@@ -34,22 +36,39 @@ router.post(
 );
 
 router.get(
-  "/friends",
+  "/list",
   [header("Authorization", "Authorization token is required").exists()],
   validate,
   verify,
   getFriends
 );
 
+router.get(
+  "/requests",
+  [header("Authorization", "Authorization token is required").exists()],
+  validate,
+  verify,
+  getFriendRequests
+);
+
+router.get(
+  "/sent-requests",
+  [header("Authorization", "Authorization token is required").exists()],
+  validate,
+  verify,
+  getFriendRequestsSent
+);
+
 router.delete(
-  "/delete",
-  [
-    header("Authorization", "Authorization token is required").exists(),
-    body("friend", "Friend username is required").exists(),
-  ],
+  "/delete/:friend",
+  [header("Authorization", "Authorization token is required").exists()],
   validate,
   verify,
   deleteFriend
 );
+
+router.get("/", (req, res) => {
+  res.status(200).json({ message: "Friend route" });
+});
 
 module.exports = router;

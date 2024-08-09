@@ -15,6 +15,7 @@ exports.up = async function (knex) {
       .onDelete("CASCADE");
     table.date("created_at").defaultTo(knex.fn.now());
     table.date("updated_at").defaultTo(knex.fn.now());
+    table.string("comment", 10000);
     table.unique(["user", "url"]);
   });
 };

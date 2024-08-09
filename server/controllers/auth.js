@@ -16,6 +16,37 @@ const getUser = async (req, res) => {
   }
 };
 
+const getfriend = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const friend = await db("users")
+      .select("first_name", "last_name", "email", "username")
+      .where({ id })
+      .first();
+    res.status(200).json({ friend, success: true });
+  } catch (error) {
+    res
+      .status(400)
+      .json({ error: error.message || error.detail || error, success: false });
+  }
+};
+
+// get all the users with search query of part of username
+const getUsers = async (req, res) => {
+  try {
+    const { username } = req.query;
+    const users = await db("users")
+      .select("first_name", "last_name", "email", "username")
+      .where("username", "ilike", `%${username}%`);
+    res.status(200).json({ users, success: true });
+  } catch (error) {
+    res
+
+      .status(400)
+      .json({ error: error.message || error.detail || error, success: false });
+  }
+};
+
 const register = async (req, res) => {
   try {
     const { first_name, last_name, email, password, username } = req.body;
@@ -98,4 +129,4 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login, getUser };
+module.exports = { register, login, getUser, getfriend, getUsers };

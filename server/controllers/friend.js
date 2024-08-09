@@ -11,11 +11,11 @@ const friendRequest = async (req, res) => {
       .first();
 
     if (existingRequest) {
-      return "Friend request already exists or they are already friends.";
+      throw new Error("Friend request already exists.");
     }
 
     // Insert the new friend request
-    await knex("friends").insert({
+    await db("friends").insert({
       user,
       friend,
       created_at: new Date(),
@@ -25,6 +25,12 @@ const friendRequest = async (req, res) => {
 
     res.status(201).json({ message: "Friend request sent.", success: true });
   } catch (error) {
+    if (
+      error.message ===
+      'insert into "friends" ("accepted", "created_at", "friend", "updated_at", "user") values ($1, $2, $3, $4, $5) - insert or update on table "friends" violates foreign key constraint "friends_friend_foreign"'
+    ) {
+      return res.status(401).json({ error: "User not found.", success: false });
+    }
     res
       .status(500)
       .json({ error: error.message || error.detail || error, success: false });
@@ -66,10 +72,44 @@ const getFriends = async (req, res) => {
   }
 };
 
+// get all friend requests
+const getFriendRequests = async (req, res) => {
+  try {
+    const user = req.user.username;
+    // Get all friend requests
+    const friends = await db("friends")
+      .where({ friend: user, accepted: false })
+      .select("user");
+
+    res.status(200).json({ friends, success: true });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: error.message || error.detail || error, success: false });
+  }
+};
+
+// get all friend requests sent
+const getFriendRequestsSent = async (req, res) => {
+  try {
+    const user = req.user.username;
+    // Get all friend requests
+    const friends = await db("friends")
+      .where({ user, accepted: false })
+      .select("friend");
+
+    res.status(200).json({ friends, success: true });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: error.message || error.detail || error, success: false });
+  }
+};
+
 const deleteFriend = async (req, res) => {
   try {
     const user = req.user.username;
-    const friend = req.body.friend;
+    const friend = req.params.friend;
     // Remove the friend
     await db("friends")
       .where({ user, friend })
@@ -89,4 +129,6 @@ module.exports = {
   acceptFriendRequest,
   getFriends,
   deleteFriend,
+  getFriendRequests,
+  getFriendRequestsSent,
 };

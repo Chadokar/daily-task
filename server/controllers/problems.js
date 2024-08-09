@@ -86,10 +86,15 @@ const suggestproblem = async (req, res) => {
         updated_at: new Date(),
       };
     });
-    await db("suggetions").insert(suggested);
+    if (suggested.length === 0) {
+      throw new Error("You don't have any friends to suggest the problem to.");
+    }
 
-    res.status(200).json({ message: "Problem suggested.", success: true });
+    res
+      .status(200)
+      .json({ message: "Problem suggested.", suggested, success: true });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ error: error.message || error.detail || error, success: false });
