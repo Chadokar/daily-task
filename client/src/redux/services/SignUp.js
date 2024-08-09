@@ -35,7 +35,9 @@ export const verifyOTP = async (payload, dispatch) => {
     });
     createToast(response.data.message, "success");
     localStorage.setItem("token", response.data.token);
-    dispatch(setUser(response.user));
+    localStorage.removeItem("temp-token");
+    localStorage.setItem("user", JSON.stringify(response.data.user));
+    dispatch(setUser(response.data.user));
     return response;
   } catch (error) {
     if (error?.response?.data?.error === "Token expired") {

@@ -17,6 +17,7 @@ export async function fetchUserData(dispatch, navigate) {
       const response = await axios.get(`/user/profile`, config);
       const data = response.data;
       dispatch(setUser(data.user));
+      localStorage.setItem("user", JSON.stringify(data.user));
       return data;
     }
   } catch (error) {
@@ -24,7 +25,7 @@ export async function fetchUserData(dispatch, navigate) {
       localStorage.removeItem("token");
     createToast(error?.response?.data?.error, "error");
     createToast("Please Re-Login", "error");
-    // localStorage.removeItem("token");
+    localStorage.removeItem("token");
     console.log(error);
     navigate("/login");
   }
@@ -68,6 +69,7 @@ export const login = async (dispatch, payload) => {
     const response = await axios.post("/user/login", payload);
     const data = response.data;
     console.log("data: ", response);
+    localStorage.setItem("user", JSON.stringify(data.user));
     dispatch(setUser(data.user));
     localStorage.setItem("token", data.token);
     createToast("Logged in successfully", "success");

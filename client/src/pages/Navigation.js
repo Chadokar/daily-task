@@ -59,7 +59,7 @@ export const navItems = [
   {
     path: "/",
     element: <LazyHome />,
-    protected: false,
+    protected: true,
     errorElement: <Error />,
   },
     {

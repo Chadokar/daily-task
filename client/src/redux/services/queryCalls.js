@@ -35,7 +35,17 @@ export const axiosGet = async (url, queryObj) => {
 // Post with Axios
 export const axiosPostRequest = async (url, queryObj, bodyObj) => {
   const query = qs.stringify(queryObj);
-  return await client.post(`${url}${query ? `? ${query}` : ""}`, bodyObj);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  };
+  console.log("bodyobj : ", bodyObj);
+  return await client.post(
+    `${url}${query ? `? ${query}` : ""}`,
+    bodyObj,
+    config
+  );
 };
 
 // PUT with Axios

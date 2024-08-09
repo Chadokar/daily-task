@@ -8,7 +8,13 @@ import { useNavigate } from 'react-router-dom';
 
 // Utility functions to get the month and year, and the days of the week and dates
 const getDaysOfWeek = () => [
-  'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
 ];
 
 const getDatesOfMonth = () => {
@@ -31,44 +37,44 @@ const getDatesOfMonth = () => {
 };
 
 // Styled components
-const CalendarContainer = styled('div')({
-  height: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
-  backgroundColor: 'black',
-  color: 'white',
+const CalendarContainer = styled("div")({
+  height: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  backgroundColor: "black",
+  color: "white",
 });
 
 const CalendarHeader = styled(Paper)({
-  backgroundColor: 'black',
-  color: 'white',
+  backgroundColor: "black",
+  color: "white",
   padding: 16,
-  textAlign: 'center',
-  borderBottom: '2px solid black',
-  boxShadow: 'none', // Remove shadow to ensure consistent look
+  textAlign: "center",
+  borderBottom: "2px solid black",
+  boxShadow: "none", // Remove shadow to ensure consistent look
 });
 
-const CalendarBody = styled('div')({
+const CalendarBody = styled("div")({
   flex: 1,
-  overflow: 'auto',
+  overflow: "auto",
 });
 
 const DayOfWeek = styled(Paper)({
-  backgroundColor: 'black',
-  color: 'white',
+  backgroundColor: "black",
+  color: "white",
   padding: 8,
-  textAlign: 'center',
-  border: '1px solid black',
-  boxShadow: 'none', // Remove shadow to ensure consistent look
+  textAlign: "center",
+  border: "1px solid black",
+  boxShadow: "none", // Remove shadow to ensure consistent look
 });
 
 const DateCell = styled(Paper)({
-  backgroundColor: 'black',
-  color: 'white',
+  backgroundColor: "black",
+  color: "white",
   padding: 16,
-  textAlign: 'center',
-  border: '1px solid black',
-  boxShadow: 'none', // Remove shadow to ensure consistent look
+  textAlign: "center",
+  border: "1px solid black",
+  boxShadow: "none", // Remove shadow to ensure consistent look
 });
 
 
@@ -88,11 +94,16 @@ const CalendarGrid = () => {
 
   // Get current month and year
   const today = new Date();
-  const monthName = today.toLocaleString('default', { month: 'long' });
+  const monthName = today.toLocaleString("default", { month: "long" });
   const year = today.getFullYear();
 
   return (
-    <CalendarContainer>
+    // give width 75% when screen size is for laptop else 100% use xs sm large etc breakpoints
+    <CalendarContainer
+      sx={{
+        width: { xs: "100%", sm: "100%", md: "100%", lg: "75%" },
+      }}
+    >
       {/* Header with month and year */}
       <CalendarHeader elevation={0}>
         <Typography variant="h6">{`${monthName} ${year}`}</Typography>
@@ -100,11 +111,15 @@ const CalendarGrid = () => {
 
       {/* Calendar grid */}
       <CalendarBody>
-        <Grid container direction="row" spacing={0} style={{ height: 'calc(100% - 64px)' }}>
+        <Grid
+          container
+          direction="row"
+          spacing={0}
+          style={{ height: "calc(100% - 64px)" }}
+        >
           {/* Days of the week row */}
           {daysOfWeek.map((day, index) => (
-            <Grid item xs key={index} style={{  border: '1px solid black' }}>
-                
+            <Grid item xs key={index} style={{ border: "1px solid black" }}>
               <DayOfWeek elevation={0}>
                 <Typography variant="body2">{day}</Typography>
               </DayOfWeek>
@@ -115,16 +130,20 @@ const CalendarGrid = () => {
           {weeks.map((week, weekIndex) => (
             <Grid container item direction="row" key={weekIndex}>
               {week.map((date, dateIndex) => (
-                <Grid item xs key={dateIndex} flex style={{ border: '1px solid rgba(255,255,255,0.3)'}}>
-                    <Button fullWidth sx={{height:'100%'}} onClick={enterSchedule}>
-
-                  <DateCell elevation={0}>
-                    <Typography variant="body2">
-                      {date ? date.getDate() : ''}
-                    </Typography>
-                  </DateCell>
-                    </Button>
-                    
+                <Grid
+                  item
+                  xs
+                  key={dateIndex}
+                  flex
+                  style={{ border: "1px solid rgba(255,255,255,0.3)" }}
+                >
+                  <Button fullWidth sx={{ height: "100%" }}>
+                    <DateCell elevation={0}>
+                      <Typography variant="body2">
+                        {date ? date.getDate() : ""}
+                      </Typography>
+                    </DateCell>
+                  </Button>
                 </Grid>
               ))}
             </Grid>
