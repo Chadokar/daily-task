@@ -42,7 +42,7 @@ const FriendRequests = () => {
     await axiosPostRequest("/friend/accept", {}, { username }).then((res) => {
       createToast("Friend request accepted", "success");
       // call the query funtion using the key to refetch the data
-      queryClient.invalidateQueries(["receivedRequests"]);
+      queryClient.invalidateQueries({ queryKey: ["receivedRequests"] });
     });
   };
 
@@ -51,7 +51,7 @@ const FriendRequests = () => {
     await axiosDelete(`/friend/delete/${username}`)
       .then((res) => {
         createToast("Friend request rejected", "success");
-        queryClient.invalidateQueries(["sentRequests"]);
+        queryClient.invalidateQueries({ queryKey: ["sentRequests"] });
       })
       .catch((error) => {
         createToast("Error rejecting request", "error");
