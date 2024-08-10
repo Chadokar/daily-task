@@ -1,7 +1,6 @@
 import React from "react";
 // import Calendar from "../components/Calendar";
 import CalendarGrid from "../components/Calendar";
-import TaskPage from "../components/Schedule";
 import Sidebar from "../components/Sidebar";
 import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";

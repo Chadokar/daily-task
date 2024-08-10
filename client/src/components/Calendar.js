@@ -1,9 +1,10 @@
-import React from "react";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
-import { Button } from "@mui/material";
+import React from 'react';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 // Utility functions to get the month and year, and the days of the week and dates
 const getDaysOfWeek = () => [
@@ -76,7 +77,13 @@ const DateCell = styled(Paper)({
   boxShadow: "none", // Remove shadow to ensure consistent look
 });
 
+
 const CalendarGrid = () => {
+  const navigate = useNavigate();
+  const enterSchedule = () => {
+    navigate('/tasks');
+  };
+
   const daysOfWeek = getDaysOfWeek();
   const datesOfMonth = getDatesOfMonth();
 
